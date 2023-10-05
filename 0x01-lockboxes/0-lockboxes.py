@@ -35,37 +35,23 @@ def canUnlockAll(boxes):
         boxes (list): List which contains all the boxes with the keys
         returns: bool; true if all the boxes can be opened, else fale
     """
-    if len(boxes) <= 1 or boxes == [[]]:
-        return True
-    
-    aux = {}
-    while True:
-        if len(aux) == 0:
-            aux[0] = {
-                'status': 'opened',
-                'keys': boxes[0],
-            }
-        keys = look_next_opened_box(aux)
-        if keys:
-            for key in keys:
-                try:
-                    if aux.get(key) and aux.get(key).get('status') \
-                        =='opened\checked':
-                        continue
-                    aux[key] ={
-                        'status': 'opened',
-                        'keys': boxes[key]
-                    }
-                except (KeyError, IndexError):
-                    continue
-        elif 'opened' in [box.get('status') for box in aux.values()]:
-            continue
-        elif len(aux) == len(boxes):
-            break
-        else:
-            return False
+    opened_boxes = [False] * len(boxes)
+    opened_boxes[0] = True  # The first box is initially opened.
+
+    # Initialize a queue for BFS (breadth-first search)
+    queue = [0]
+
+    while queue:
+        current_box = queue.pop(0)
+        for key in boxes[current_box]:
+            if not opened_boxes[key]:
+                opened_boxes[key] = True
+                queue.append(key)
+
+    # Check if all boxes have been opened
+    return all(opened_boxes)
         
-        return len(aux) == len(boxes)
+      #  return len(aux) == len(boxes)
     
     def main():
         """Entry Point"""
@@ -73,4 +59,3 @@ def canUnlockAll(boxes):
                      )
     if __name__ == "__main__":
         main()
-
