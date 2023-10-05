@@ -1,7 +1,19 @@
 #!/usr/bin/python3
-"""Solve the lock boxes puzzle """
+"""
+Unlock Boxes 
 
+You have n number of locked boxes in front of you. Each box is numbered sequentially from 0 to n - 1 and each box may contain keys to the other boxes.
 
+Write a method that determines if all the boxes can be opened.
+
+Prototype: def canUnlockAll(boxes)
+boxes is a list of lists
+A key with the same number as a box opens that box
+You can assume all keys will be positive integers
+There can be keys that do not have boxes
+The first box boxes[0] is unlocked
+Return True if all boxes can be opened, else return False
+"""
 def look_next_opened_box(opened_boxes):
     """Looks for the next opened box
     Args:
@@ -18,15 +30,14 @@ def look_next_opened_box(opened_boxes):
 
 
 def canUnlockAll(boxes):
-    """Check if all boxes can be opened
-    Args:
-        boxes (list): List which contain all the boxes with the keys
-    Returns:
-        bool: True if all boxes can be opened, otherwise, False
+    """ check if all boxes can be opened
+    Args: 
+        boxes (list): List which contains all the boxes with the keys
+        returns: bool; true if all the boxes can be opened, else fale
     """
     if len(boxes) <= 1 or boxes == [[]]:
         return True
-
+    
     aux = {}
     while True:
         if len(aux) == 0:
@@ -39,9 +50,9 @@ def canUnlockAll(boxes):
             for key in keys:
                 try:
                     if aux.get(key) and aux.get(key).get('status') \
-                       == 'opened/checked':
+                        =='opened\checked':
                         continue
-                    aux[key] = {
+                    aux[key] ={
                         'status': 'opened',
                         'keys': boxes[key]
                     }
@@ -53,14 +64,12 @@ def canUnlockAll(boxes):
             break
         else:
             return False
-
-    return len(aux) == len(boxes)
-
-
-def main():
-    """Entry point"""
-    canUnlockAll([[]])
-
-
-if __name__ == '__main__':
-    main()
+        
+        return len(aux) == len(boxes)
+    
+    def main():
+        """Entry Point"""
+        canUnlockAll([[]]
+                     )
+    if __name__ == "__main__":
+        main()
